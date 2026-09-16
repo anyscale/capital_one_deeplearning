@@ -150,8 +150,8 @@ def build_resnet18_mnist() -> torch.nn.Module:
 class TokenizeText:
     """Stateful Ray Data transform. Loads a tokenizer once per actor.
 
-    Notebook 01 builds this inline to teach the pattern. Notebooks 02 use it
-    through `build_tokenized_text_dataset` so they can focus on training.
+    Notebook 01 builds this inline to teach the pattern. Notebook 02 uses it
+    through `build_tokenized_text_dataset` so it can focus on training.
     """
 
     def __init__(self, model_name: str, seq_len: int):
@@ -178,13 +178,14 @@ class TokenizeText:
 def build_tokenized_text_dataset(
     model_name: str,
     seq_len: int = 128,
-    dataset_dir: str = "/mnt/cluster_storage/datasets/ag_news",
+    dataset_dir: str = "/mnt/cluster_storage/datasets/card_transactions",
     actors: int = 2,
 ):
     """Return a Ray Dataset of tokenized text, ready for `get_dataset_shard`.
 
-    Reads AG News from local parquet (staged from the tutorial's public S3
-    mirror by the calling notebook), so this never touches the Hugging Face Hub.
+    Reads the card-transaction corpus from local parquet (staged from the
+    tutorial's public S3 mirror by the calling notebook), so this never touches
+    the Hugging Face Hub.
     `model_name` is a local directory holding the tokenizer files.
     """
     import ray.data
